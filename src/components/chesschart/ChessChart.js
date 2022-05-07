@@ -7,8 +7,6 @@ import {drawPoint} from "chart.js/helpers";
 
 const ChessChart = () => {
 
-    const chartButton = document.getElementById("chartButton");
-
     function displayChart() {
         const histogram = document.getElementById('histogram');
         let context = histogram.getContext('2d');
@@ -86,11 +84,11 @@ const ChessChart = () => {
         if(prevChart !== undefined) {
             prevChart.clear();
             prevChart.destroy();
-            chartButton.innerText = "Draw chart";
+            document.getElementById("chartButton").innerText = "Draw chart";
         }
         else{
-            chartButton.innerText = "Hide chart";
             displayChart();
+            document.getElementById("chartButton").innerText = "Hide chart";
         }
     }
 
