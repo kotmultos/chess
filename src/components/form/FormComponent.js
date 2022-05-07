@@ -5,16 +5,28 @@ import {Button, Dropdown, Form, ListGroup, Nav} from "react-bootstrap";
 const FormComponent = () => {
     return (
         <Form className={'mt-3 '}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="email" placeholder="Enter email" />
+            <Form.Group className="mb-3" >
+                <Form.Control
+                    type="email"
+                    id={'email'}
+                    name={'email'}
+                    placeholder="Enter email" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control type="password" placeholder="Password" />
+            <Form.Group className="mb-3" >
+                <Form.Control
+                    type="password"
+                    name={'password'}
+                    id={'password'}
+                    placeholder="Password" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control type="text" placeholder="Country" />
+            <Form.Group className="mb-3" >
+                <Form.Control
+                    type="text"
+                    name={'country'}
+                    id={'country'}
+                    placeholder="Country" />
             </Form.Group>
 
             {/*<Form.Select aria-label="Country">*/}
@@ -25,24 +37,30 @@ const FormComponent = () => {
             {/*</Form.Select>*/}
 
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control type="number" placeholder="Years of experience"/>
+            <Form.Group className="mb-3" >
+                <Form.Control
+                    type="number"
+                    name={'experience'}
+                    id={'experience'}
+                    placeholder="Years of experience"/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3" >
                 <Form.Check required inline type={'radio'} id={'gender-male'} name={'gender'} value={'male'} label={'male'}/>
                 <Form.Check required inline type={'radio'} id={'gender-female'} name={'gender'} value={'female'} label={'female'}/>
                 <Form.Check required inline type={'radio'} id={'gender-not-stated'} name={'gender'} value={'not-stated'} label={'not stated'} defaultChecked/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Example textarea</Form.Label>
-                <Form.Control as="textarea" rows={3}  size={"lg"} resize={'none'}/>
+            <Form.Group className="mb-3" >
+                <Form.Control
+                    name={'about'}
+                    id={'about'}
+                    as="textarea"
+                    rows={5}
+                    placeholder={'Say something more about yourself...'}/>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
+            <Button variant="primary" type="submit">Submit</Button>
 
             <Dropdown.Divider/>
 

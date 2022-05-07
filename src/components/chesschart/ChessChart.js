@@ -2,8 +2,7 @@ import React from 'react';
 
 import './ChessChart.css';
 import Chart from "chart.js/auto";
-import {Button} from "react-bootstrap";
-import {drawPoint} from "chart.js/helpers";
+import {Button, Dropdown} from "react-bootstrap";
 
 const ChessChart = () => {
 
@@ -94,8 +93,9 @@ const ChessChart = () => {
 
     return (
         <div className={"mt-3"}>
-            <div><Button id={"chartButton"} onClick={toggleChart}>Draw chart</Button></div>
-                <canvas id={"histogram"} height="300px" width="300px"> </canvas>
+            <Dropdown.Divider/>
+            <div><Button id={"chartButton"}  onClick={toggleChart}>Draw chart</Button></div>
+            <canvas id={"histogram"}> </canvas>
         </div>
     );
 };
