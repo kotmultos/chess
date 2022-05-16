@@ -1,150 +1,192 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 
 import './Timer.css'
 import {logDOM} from "@testing-library/react";
 
+
+
 const Timer = () => {
     // опрацювання таймерів ------------------------
-    let time1 = 0;
-    let time2 = 0;
+    // let time1 = 0;
+    // let time2 = 0;
+    const  defaultTime = 5;
 
-    const timer1 = React.createRef();
-    const timer2 = React.createRef();
-    const btnPlayer1 = React.createRef();
-    const btnPlayer2 = React.createRef();
-    const resetBtn = React.createRef();
-    const stopBtn = React.createRef();
-    console.log('after')
+    let [time1, setTime1] = useState(defaultTime);
+    let [time2, setTime2] = useState(defaultTime);
 
-    let timeIntervals = 0
-    let displayIntervals = 0
+    const [firstInterval, setFirstInterval] = useState(0);
+    const [secondInterval, setSecondInterval] = useState(0);
+    const [disableStartButton, setDisableStartButton] = useState(false);
+    const [disableStopButton, setDisableStopButton] = useState(true);
+    const [disableFirstPlayerButton, setDisableFirstPlayerButton] = useState(true);
+    const [disableSecondPlayerButton, setDisableSecondPlayerButton] = useState(true);
+
+
+    // const timer1 = React.createRef();
+    // const timer2 = React.createRef();
+    // const btnPlayer1 = React.createRef();
+    // const btnPlayer2 = React.createRef();
+    // const resetBtn = React.createRef();
+    // const stopBtn = React.createRef();
+
+    // let timeIntervals = 0
+    // let displayIntervals = 0
 
     function countDown1() {
-        if (time1 > 0) {  time1--;  }
+        console.log(`time1: ${time1} \t time2: ${time2} FIRST`);
+        if (time1 > 0) {  setTime1(time1--);  }
         else {
-            alert('time is over for player 1 ');
+            // alert('time is over for player 1 ');
             console.log('time is over for player 1 ');
-            stopTimer();
+            clearInterval(firstInterval);
+            // setFirstInterval(0);
+            // console.log("--")
+            // stopTimer();
         }
     }
 
     function countDown2() {
-        if (time2 > 0) { time2--; }
+        console.log(`time1: ${time1} \t time2: ${time2} SECOND`);
+        if (time2 > 0) { setTime2(time2--); }
         else {
-            alert('time is over for player 2');
+            // alert('time is over for player 2');
             console.log('time is over for player 2');
-            stopTimer();
+            clearInterval(secondInterval);
+            // console.log('========')
+            // stopTimer();
         }
     }
 
-    function displayValues() {
-        console.log(`time: ${time1} & ${time2}`)
-        timer1.value = time1.toString()
-        timer2.value = time2.toString();
-    }
+    // function displayValues() {
+    //     console.log(`time1: ${time1} \t time2: ${time2}`);
+    //     // timer1.value = time1.toString();
+    //     // timer2.value = time2.toString();
+    // }
 
     function  stopTimer() {
-        timer1.value = "";
-        timer2.value = "";
-        clearInterval(timeIntervals);
-        clearInterval(displayIntervals);
-        resetBtn.disabled = false;
-        stopBtn.disabled = true;
-        btnPlayer1.disabled = true;
-        btnPlayer2.disabled = true;
-        timer1.style.color = "black";
-        timer2.style.color = "black";
+        // timer1.value = "";
+        // timer2.value = "";
+        console.log('timer stopped');
+        //clearInterval(timeIntervals); // important raw
+        // setFirstInterval(0);
+        // setFirstInterval(0);
+
+        clearInterval(firstInterval);
+        clearInterval(secondInterval);
+
+        // clearInterval(displayIntervals);
+
+        setDisableStopButton(true);
+        setDisableFirstPlayerButton(true);
+        setDisableSecondPlayerButton(true);
+        setDisableStartButton(false);
+
+        // resetBtn.disabled = false;
+        // stopBtn.disabled = true;
+        // btnPlayer1.disabled = true;
+        // btnPlayer2.disabled = true;
+        // timer1.style.color = "black";
+        // timer2.style.color = "black";
     }
 
-    function setTimer() {
+    function setTimer(event) {
         console.log('\nsetTimer()\n');
+        event.preventDefault();
 
-        time1 = 60;
-        time2 = 60;
+        // setTime1(60);
+        // setTime2(60);
 
-        if(timer1 !== undefined)
-        {console.log("undef wtf")}
+        // console.log(event.target);
+        // console.log("------")
+        // console.log(event.target.inputTimeFirst);
+        // console.log("------value")
+        // console.log(event.target.inputTimeFirst.value);
+        // console.log("------length")
+        // console.log(event.target.inputTimeFirst.value.length);
 
-        if(timer1.value  !==  '') {
+        if(event.target.inputTimeFirst.value.length !== 0) {
             try{
-                let newTime = parseInt(timer1.value, 10);
-
+                let newTime = parseInt(event.target.inputTimeFirst.value, 10);
+                console.log("newTime"); console.log(newTime);
                 if(newTime < 30) {
                     throw new Error(`Значення часу має бути як мінімум 30 секунд!\nБуде використано значення за замовчуванням: ${time1} секунд`)
                 }
                 if(newTime >= 300) {
                     throw new Error(`Значення часу має бути не більше за 300 секунд!\nБуде використано значення за замовчуванням: ${time1} секунд`)
                 }
-                time1 = newTime;
-                time2 = time1;
+                setTime1(newTime);
+                setTime2(newTime);
             }
             catch (e) {
                 alert(e)
                 console.log(e);
+                setTime1(defaultTime);
+                setTime2(defaultTime);
             }
         }
 
-        console.log(`time: ${time1} & ${time2}` )
+        // console.log(`time: ${time1} & ${time2}` )
 
-        timeIntervals = setInterval(countDown1, 1000);
-        displayIntervals = setInterval(displayValues, 1000);
+        setFirstInterval(setInterval(countDown1, 1000));
+        // displayIntervals = setInterval(displayValues, 1000);
 
-        timer1.style.color = "red";
-        timer2.style.color = "black";
+        event.target.inputTimeFirst.value = time1;
 
-        btnPlayer1.disabled = false;
-        resetBtn.disabled = true;
-        stopBtn.disabled = false;
+        setDisableStopButton(false);
+        setDisableFirstPlayerButton(false);
+        setDisableStartButton(true);
     }
 
     function player1Click() {
-        actionsOnPlayerButtonClick(btnPlayer1, btnPlayer2, timer1, timer2, countDown2);
+        clearInterval(firstInterval);
+        setSecondInterval(setInterval(countDown2, 1000));
+
+        setDisableFirstPlayerButton(true);
+        setDisableSecondPlayerButton(false);
     }
 
     function player2Click() {
-        actionsOnPlayerButtonClick(btnPlayer2, btnPlayer1, timer2, timer1, countDown1);
-    }
+        clearInterval(secondInterval);
+        setFirstInterval(setInterval(countDown1, 1000));
 
-    function actionsOnPlayerButtonClick(btnClicked, btnElse, tmrClicked, tmrElse, func) {
-        btnElse.disabled = false;
-        btnClicked.disabled = true;
-        tmrElse.style.color = "red";
-        tmrClicked.style.color = "black";
-        clearInterval(timeIntervals);
-        timeIntervals = setInterval(func, 1000);
+        setDisableFirstPlayerButton(false);
+        setDisableSecondPlayerButton(true);
     }
-
 
     return (
-        <div className={'mt-3'}>
-
-            <Form.Group className="mb-3" >
+        <div className={'mt-3 mb-3'}>
+        <Form onSubmit={setTimer}>
+            <Form.Group controlId={"inputTimeFirst"}>
                 <Form.Label>First player</Form.Label>
                 <div className={'d-flex'}>
                     <Form.Control
                         type="number"
-                        ref={timer1}
                         placeholder="set time"
-                        className={'width-125'}/>
+                        className={'width-125'}
 
-                    <Button className={'width-125 mx-3'} ref={btnPlayer1} onClick={player1Click} disabled>Player 1</Button>
-                    <Button className={'width-125 mx-3'} ref={resetBtn} onClick={setTimer} >Set timer</Button>
-                </div>
-                <Form.Label>Second player</Form.Label>
+                    />
 
-                <div className={'d-flex'}>
-                    <Form.Control
-                        type="number"
-                        ref={timer2}
-                        readOnly
-                        className={'width-125'}/>
-
-                    <Button className={'width-125 mx-3'} ref={btnPlayer2}  onClick={player2Click} disabled>Player 2</Button>
-                    <Button className={'width-125 mx-3'} ref={stopBtn} onClick={stopTimer} disabled>Stop timer</Button>
+                    <Button className={'width-125 mx-3'} disabled={disableFirstPlayerButton} onClick={player1Click} >Player 1</Button>
+                    <Button className={'width-125 mx-3'} disabled={disableStartButton} type={"submit"} >Set timer</Button>
                 </div>
             </Form.Group>
 
+            <Form.Group controlId={"inputTimeSecond"} >
+                <Form.Label>Second player</Form.Label>
+                <div className={'d-flex'}>
+                    <Form.Control
+                        type="number"
+                        readOnly
+                        className={'width-125'}
+                        value={time2}
+                    />
+
+                    <Button className={'width-125 mx-3'} disabled={disableSecondPlayerButton}  onClick={player2Click} >Player 2</Button>
+                    <Button className={'width-125 mx-3'} disabled={disableStopButton} onClick={stopTimer} >Stop timer</Button>
+                </div>
+            </Form.Group>
+        </Form>
 
 
             {/*<div className="flex align-center">*/}

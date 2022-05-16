@@ -7,6 +7,7 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import {FormComponent} from "./components/form/FormComponent";
 import {ChessChart} from "./components/chesschart/ChessChart";
 import {Timer} from "./components/timer/Timer";
+import {Avatar} from "./components/avatar/Avatar";
 
 function App() {
     return (
@@ -20,11 +21,20 @@ function App() {
                         <ChessChart/>
                     </Col>
                     <Col className={'col-xxl-3 col-xl-3 col-lg-12 col-md-4 col-sm-12 col-12'}>
+                        <Avatar/>
                         <FormComponent/>
                     </Col>
                 </Row>
         </Container>
     );
 }
+// timer:
+// use state read
+// use effect read
+
+// прихований елемент на форму додати
+// валідація Joi/react
+
+// change avatar + Яну запитати.
 
 export default App;
