@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 
 import './Timer.css'
@@ -27,29 +27,64 @@ const Timer = () => {
     // const [disableStopButton, setDisableStopButton] = useState(false);
     // const [disableFirstPlayerButton, setDisableFirstPlayerButton] = useState(false);
     // const [disableSecondPlayerButton, setDisableSecondPlayerButton] = useState(false);
+    const [activeFirst, setActiveFirst] = useState(false);
+    const [activeSecond, setActiveSecond] = useState(false);
+    let interval = 0;
+
+    useEffect(() => {
+        // const interval = setInterval(() => {
+          interval = setInterval(() => {
+            if (activeFirst) {
+                if (time1 > 0) {
+                    setTime1((prevTime1) => prevTime1 - 1);
+                    console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
+                }
+                else {
+                    console.log("time is over for player 1")
+                    clearInterval(interval);
+                    stopTimer();
+                }
+            }
+
+            if (activeSecond) {
+                if (time2 > 0) {
+                    setTime2((prevTime2) => prevTime2 - 1);
+                    console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
+                }
+                else {
+                    console.log("time is over for player 2")
+                    clearInterval(interval);
+                    stopTimer();
+                }
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+
+    }, [activeFirst, activeSecond, time1, time2]);
+
 
     const setTimer = (e) => {
         e.preventDefault();
-        setFirstInterval(setInterval(startFirst, 1000));
-
+        // setFirstInterval(setInterval(startFirst, 1000));
+        setTime1(defaultTime);
+        setTime2(defaultTime);
+        setActiveFirst(true);
         setDisableFirstPlayerButton(false);
         setDisableStartButton(true);
         setDisableStopButton(false);
     }
 
     const player1Click = () => {
-        clearInterval(firstInterval);
-
-        setSecondInterval(setInterval(startSecond, 1000));
+       setActiveFirst(false);
+       setActiveSecond(true);
 
         setDisableFirstPlayerButton(true);
         setDisableSecondPlayerButton(false);
     }
 
     const player2Click = () => {
-        clearInterval(secondInterval);
-
-        setFirstInterval(setInterval(startFirst, 1000));
+        setActiveFirst(true);
+        setActiveSecond(false);
 
         setDisableFirstPlayerButton(false);
         setDisableSecondPlayerButton(true);
@@ -81,8 +116,15 @@ const Timer = () => {
 
     function stopTimer()
     {
-        clearInterval(firstInterval);
-        clearInterval(secondInterval);
+        // clearInterval(firstInterval);
+        // clearInterval(secondInterval);
+        console.log("timer stopped")
+        clearInterval(interval);
+
+        setDisableStartButton(false);
+        setDisableStopButton(true);
+        setDisableFirstPlayerButton(true);
+        setDisableSecondPlayerButton(true);
     }
     return (
         <div className={'mt-3 mb-3'}>
@@ -118,6 +160,8 @@ const Timer = () => {
             </Form.Group>
         </Form>
 
+            <p>FIRST: {time1}</p>
+            <p>SECOND: {time2}</p>
 
             {/*<div className="flex align-center">*/}
             {/*    <div className="timer" id="timer-2"> </div>*/}
