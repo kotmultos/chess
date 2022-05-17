@@ -22,8 +22,68 @@ const Timer = () => {
     const [disableFirstPlayerButton, setDisableFirstPlayerButton] = useState(true);
     const [disableSecondPlayerButton, setDisableSecondPlayerButton] = useState(true);
 
+    // damn code
+    // const [disableStartButton, setDisableStartButton] = useState(false);
+    // const [disableStopButton, setDisableStopButton] = useState(false);
+    // const [disableFirstPlayerButton, setDisableFirstPlayerButton] = useState(false);
+    // const [disableSecondPlayerButton, setDisableSecondPlayerButton] = useState(false);
 
+    const setTimer = (e) => {
+        e.preventDefault();
+        setFirstInterval(setInterval(startFirst, 1000));
 
+        setDisableFirstPlayerButton(false);
+        setDisableStartButton(true);
+        setDisableStopButton(false);
+    }
+
+    const player1Click = () => {
+        clearInterval(firstInterval);
+
+        setSecondInterval(setInterval(startSecond, 1000));
+
+        setDisableFirstPlayerButton(true);
+        setDisableSecondPlayerButton(false);
+    }
+
+    const player2Click = () => {
+        clearInterval(secondInterval);
+
+        setFirstInterval(setInterval(startFirst, 1000));
+
+        setDisableFirstPlayerButton(false);
+        setDisableSecondPlayerButton(true);
+    }
+
+    function startFirst() {
+        console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
+        if (time1 > 0) {
+            setTime1(time1--);
+        } else {
+            clearInterval(firstInterval);
+
+            setDisableStartButton(false);
+            // setShowAlert(true);
+        }
+    }
+
+    function startSecond() {
+        console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
+        if (time2 > 0) {
+            setTime2(time2--);
+        } else {
+            clearInterval(secondInterval);
+
+            setDisableStartButton(false);
+            // setShowAlert(true);
+        }
+    }
+
+    function stopTimer()
+    {
+        clearInterval(firstInterval);
+        clearInterval(secondInterval);
+    }
     return (
         <div className={'mt-3 mb-3'}>
         <Form onSubmit={setTimer}>
