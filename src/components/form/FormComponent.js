@@ -4,8 +4,10 @@ import {Alert, Button, Dropdown, Form, Nav} from "react-bootstrap";
 import {joiResolver} from '@hookform/resolvers/joi';
 import {Validator} from "../../validator/Validator.js";
 import {useForm} from 'react-hook-form';
+import {useEffect, useState} from "react";
 
 const FormComponent = () => {
+    const [success, setSuccess] = useState(false);
 
     function getCurrentDate() {
         let today = new Date();
@@ -13,16 +15,20 @@ const FormComponent = () => {
     }
 
     function submitForm(e) {
-        // e.preventDefault();
+        setSuccess(true);
+        setTimeout(() => {
+            setSuccess(false);
+        },5000);
+
         let request = "";
-        request += `email=${e.target.email.value}\n`;
-        request += `password=${e.target.password.value}\n`;
-        request += `country=${e.target.country.value}\n`;
-        request += `experience=${e.target.experience.value}\n`;
-        request += `gender=${e.target.gender.value}\n`;
-        request += `about=${e.target.about.value}\n`;
-        request += `current-date=${e.target.currentDate.value}`;
-        console.log(request)
+        request += `email=${e.email}\n`;
+        request += `password=${e.password}\n`;
+        request += `country=${e.country}\n`;
+        request += `experience=${e.experience}\n`;
+        request += `gender=${e.gender}\n`;
+        request += `about=${e.about}\n`;
+        request += `current-date=${e.currentDate}`;
+
         alert(request);
     }
 
@@ -61,7 +67,9 @@ const FormComponent = () => {
                              type="text"
                              name={'country'}
                              id={'country'}
-                             placeholder="Country">
+                             placeholder="Country"
+                             {...register('country')}>
+
 
                     <option value="Ukraine">Ukraine</option>
                     <option value="England">England</option>
@@ -83,7 +91,7 @@ const FormComponent = () => {
                 {errors.experience && <Alert className={'mt-2'}>{errors.experience.message}</Alert>}
             </Form.Group>
 
-            <Form.Group className="mb-3" >
+            <Form.Group className="mb-3"  {...register('gender')}>
                 <Form.Check required inline type={'radio'} id={'gender-male'} name={'gender'} value={'male'} label={'male'}/>
                 <Form.Check required inline type={'radio'} id={'gender-female'} name={'gender'} value={'female'} label={'female'}/>
                 <Form.Check required inline type={'radio'} id={'gender-not-stated'} name={'gender'} value={'not-stated'} label={'not stated'} defaultChecked/>
@@ -106,19 +114,20 @@ const FormComponent = () => {
                     name={'currentDate'}
                     type={"hidden"}
                     value={getCurrentDate()}
-                    />
+                    {...register('currentDate')}/>
             </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
+            <div className={"d-flex "}>
+                <Button variant="primary" type="submit" className={"height-38"}>Submit</Button>
+                {success && <Alert variant={"success"} className={'mx-2'}>Everything is good!</Alert>}
+            </div>
 
             <Dropdown.Divider/>
 
             <Nav.Link href={'https://www.chess.com/learn-how-to-play-chess'} target={'_blank'}>
-                Забули правила гри? Підгляньте тут.</Nav.Link>
+                Забули правила гри? Підгляньте тут</Nav.Link>
             <Nav.Link href={'https://www.chess.com/puzzles/problem/42342'} target={'_blank'}>
                 Перегляньте цю головоломку на chess.com</Nav.Link>
-
         </Form>
-
     );
 };
 
