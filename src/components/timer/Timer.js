@@ -19,34 +19,41 @@ const Timer = () => {
 
     const [activeFirst, setActiveFirst] = useState(false);
     const [activeSecond, setActiveSecond] = useState(false);
+    // const [isTimeSet, setIsTimeSet] = useState("hidden");
+    const [isTimeSet, setIsTimeSet] = useState(false);
+
+
+
     let interval = 0;
 
     useEffect(() => {
         // const interval = setInterval(() => {
           interval = setInterval(() => {
-            if (activeFirst) {
-                if (time1 > 0) {
-                    setTime1((prevTime1) => prevTime1 - 1);
-                    console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
+            if(isTimeSet){
+                if (activeFirst) {
+                    if (time1 > 0) {
+                        setTime1((prevTime1) => prevTime1 - 1);
+                        console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
+                    }
+                    else {
+                        console.log("time is over for player 1")
+                        alert("time is over for player 1!");
+                        clearInterval(interval);
+                        stopTimer();
+                    }
                 }
-                else {
-                    console.log("time is over for player 1")
-                    alert("time is over for player 1!");
-                    clearInterval(interval);
-                    stopTimer();
-                }
-            }
 
-            if (activeSecond) {
-                if (time2 > 0) {
-                    setTime2((prevTime2) => prevTime2 - 1);
-                    console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
-                }
-                else {
-                    alert("time is over for player 2!")
-                    console.log("time is over for player 2")
-                    clearInterval(interval);
-                    stopTimer();
+                if (activeSecond) {
+                    if (time2 > 0) {
+                        setTime2((prevTime2) => prevTime2 - 1);
+                        console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
+                    }
+                    else {
+                        alert("time is over for player 2!")
+                        console.log("time is over for player 2")
+                        clearInterval(interval);
+                        stopTimer();
+                    }
                 }
             }
         }, 1000);
@@ -71,6 +78,8 @@ const Timer = () => {
         setTime1(newTime);
         setTime2(newTime);
         setActiveFirst(true);
+        // setIsTimeSet("hidden");
+        setIsTimeSet(true);
         setDisableFirstPlayerButton(false);
         setDisableStartButton(true);
         setDisableStopButton(false);
@@ -97,30 +106,48 @@ const Timer = () => {
         console.log("timer stopped")
         clearInterval(interval);
 
-        // setTime1(0);
-        // setTime2(null);
+        setTime1(0);
+        setTime2(0);
+
+        setIsTimeSet(false);
+
 
         setDisableStartButton(false);
         setDisableStopButton(true);
         setDisableFirstPlayerButton(true);
         setDisableSecondPlayerButton(true);
+
     }
+
+
     return (
         <div className={'mt-3 mb-3'}>
         <Form onSubmit={setTimer}>
-            <Form.Group controlId={"inputTimeFirst"}>
                 <Form.Label>First player</Form.Label>
-                <div className={'d-flex'}>
+                <div className={'d-flex height-38'}>
+                    {isTimeSet &&
                     <Form.Control
+                        itemID={"displayTime1"}
                         type="number"
-                        placeholder="set time"
+                        readOnly
                         className={'width-125'}
-                    />
+                        value={time1}
+                    /> }
+
+                    {!isTimeSet &&
+                    <Form.Group controlId={"inputTimeFirst"}>
+                        <Form.Control
+                            itemID={"setTime"}
+                            type="number"
+                            placeholder="set time"
+                            className={'width-125'}
+                        />
+                    </Form.Group>  }
 
                     <Button className={'width-125 mx-3'} disabled={disableFirstPlayerButton} onClick={player1Click} >Player 1</Button>
                     <Button className={'width-125 mx-3'} disabled={disableStartButton} type={"submit"} >Set timer</Button>
                 </div>
-            </Form.Group>
+
 
             <Form.Group controlId={"inputTimeSecond"} >
                 <Form.Label>Second player</Form.Label>
