@@ -2,9 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 
 import './Timer.css'
-import {logDOM} from "@testing-library/react";
-
-
 
 const Timer = () => {
     const  defaultTime = 5;
@@ -16,51 +13,45 @@ const Timer = () => {
     const [disableStopButton, setDisableStopButton] = useState(true);
     const [disableFirstPlayerButton, setDisableFirstPlayerButton] = useState(true);
     const [disableSecondPlayerButton, setDisableSecondPlayerButton] = useState(true);
-
     const [activeFirst, setActiveFirst] = useState(false);
     const [activeSecond, setActiveSecond] = useState(false);
-    // const [isTimeSet, setIsTimeSet] = useState("hidden");
     const [isTimeSet, setIsTimeSet] = useState(false);
-
-
 
     let interval = 0;
 
     useEffect(() => {
-        // const interval = setInterval(() => {
           interval = setInterval(() => {
-            if(isTimeSet){
-                if (activeFirst) {
-                    if (time1 > 0) {
-                        setTime1((prevTime1) => prevTime1 - 1);
-                        console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
-                    }
-                    else {
-                        console.log("time is over for player 1")
-                        alert("time is over for player 1!");
-                        clearInterval(interval);
-                        stopTimer();
-                    }
-                }
+              if(isTimeSet){
+               if (activeFirst) {
+                   if (time1 > 0) {
+                       setTime1((prevTime1) => prevTime1 - 1);
+                       console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
+                   }
+                   else {
+                       console.log("time is over for player 1")
+                       alert("time is over for player 1!");
+                       clearInterval(interval);
+                       stopTimer();
+                   }
+               }
 
-                if (activeSecond) {
-                    if (time2 > 0) {
-                        setTime2((prevTime2) => prevTime2 - 1);
-                        console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
+               if (activeSecond) {
+                   if (time2 > 0) {
+                       setTime2((prevTime2) => prevTime2 - 1);
+                       console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
+                   }
+                   else {
+                       alert("time is over for player 2!")
+                       console.log("time is over for player 2")
+                       clearInterval(interval);
+                       stopTimer();
                     }
-                    else {
-                        alert("time is over for player 2!")
-                        console.log("time is over for player 2")
-                        clearInterval(interval);
-                        stopTimer();
-                    }
-                }
-            }
+               }
+          }
         }, 1000);
         return () => clearInterval(interval);
 
     }, [activeFirst, activeSecond, time1, time2]);
-
 
     const setTimer = (e) => {
         e.preventDefault();
@@ -71,14 +62,13 @@ const Timer = () => {
             console.log(e.target.inputTimeFirst.value)
             let value = parseInt(e.target.inputTimeFirst.value, 10);
             if(value <= 15 || value >= 300)
-                alert(`Отримане значення поза доступним дыапазоном. Буде використано значення за замовчуванням: ${newTime}`)
+                alert(`Отримане значення поза доступним діапазоном. Буде використано значення за замовчуванням: ${newTime}`)
             else newTime = value;
         }
 
         setTime1(newTime);
         setTime2(newTime);
         setActiveFirst(true);
-        // setIsTimeSet("hidden");
         setIsTimeSet(true);
         setDisableFirstPlayerButton(false);
         setDisableStartButton(true);
@@ -111,14 +101,14 @@ const Timer = () => {
 
         setIsTimeSet(false);
 
+        setActiveFirst(false);
+        setActiveSecond(false);
 
         setDisableStartButton(false);
         setDisableStopButton(true);
         setDisableFirstPlayerButton(true);
         setDisableSecondPlayerButton(true);
-
     }
-
 
     return (
         <div className={'mt-3 mb-3'}>
