@@ -18,7 +18,7 @@ const Timer = () => {
     const [isTimeSet, setIsTimeSet] = useState(false);
 
     let interval = 0;
-
+// here
     useEffect(() => {
           interval = setInterval(() => {
               if(isTimeSet){
