@@ -126,8 +126,8 @@ const Timer = () => {
                         />
                     </Form.Group>  }
 
-                    <Button className={'width-125 mx-3'} disabled={disableFirstPlayerButton} onClick={player1Click} >Player 1</Button>
-                    <Button className={'width-125 mx-3'} disabled={disableStartButton} type={"submit"} >Set timer</Button>
+                    <Button className={'width-125 mx-2'} disabled={disableFirstPlayerButton} onClick={player1Click} >Player 1</Button>
+                    <Button className={'width-125 mx-2'} disabled={disableStartButton} type={"submit"} >Set timer</Button>
                 </div>
 
 
@@ -141,8 +141,8 @@ const Timer = () => {
                         value={time2}
                     />
 
-                    <Button className={'width-125 mx-3'} disabled={disableSecondPlayerButton}  onClick={player2Click} >Player 2</Button>
-                    <Button className={'width-125 mx-3'} disabled={disableStopButton} onClick={stopTimer} >Stop timer</Button>
+                    <Button className={'width-125 mx-2'} disabled={disableSecondPlayerButton}  onClick={player2Click} >Player 2</Button>
+                    <Button className={'width-125 mx-2'} disabled={disableStopButton} onClick={stopTimer} >Stop timer</Button>
                 </div>
             </Form.Group>
         </Form>
