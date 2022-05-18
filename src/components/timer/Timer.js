@@ -18,19 +18,16 @@ const Timer = () => {
     const [isTimeSet, setIsTimeSet] = useState(false);
 
     let interval = 0;
-// here
+
     useEffect(() => {
           interval = setInterval(() => {
               if(isTimeSet){
                if (activeFirst) {
                    if (time1 > 0) {
                        setTime1((prevTime1) => prevTime1 - 1);
-                       console.log(`time 1: ${time1}\ttime 2: ${time2} FIRST`)
                    }
                    else {
-                       console.log("time is over for player 1")
                        alert("time is over for player 1!");
-                       clearInterval(interval);
                        stopTimer();
                    }
                }
@@ -38,12 +35,9 @@ const Timer = () => {
                if (activeSecond) {
                    if (time2 > 0) {
                        setTime2((prevTime2) => prevTime2 - 1);
-                       console.log(`time 1: ${time1}\ttime 2: ${time2} SECOND`)
                    }
                    else {
                        alert("time is over for player 2!")
-                       console.log("time is over for player 2")
-                       clearInterval(interval);
                        stopTimer();
                     }
                }
@@ -57,9 +51,8 @@ const Timer = () => {
         e.preventDefault();
         let newTime = defaultTime;
 
-        if(e.target.inputTimeFirst.value !== "")
+        if(e.target.inputTimeFirst.value.length !== 0)
         {
-            console.log(e.target.inputTimeFirst.value)
             let value = parseInt(e.target.inputTimeFirst.value, 10);
             if(value <= 15 || value >= 300)
                 alert(`Отримане значення поза доступним діапазоном. Буде використано значення за замовчуванням: ${newTime}`)
@@ -93,7 +86,6 @@ const Timer = () => {
 
     function stopTimer()
     {
-        console.log("timer stopped")
         clearInterval(interval);
 
         setTime1(0);
