@@ -4,7 +4,7 @@ import {Button, Form} from "react-bootstrap";
 import './Timer.css'
 
 const Timer = () => {
-    const  defaultTime = 5;
+    const  defaultTime = 30;
 
     let [time1, setTime1] = useState(0);
     let [time2, setTime2] = useState(0);

@@ -29,7 +29,7 @@ export const Validator = Joi.object({
             'string.pattern.base': 'Дозволено використання літер англійського алфавіту та цифр'
         }),
 
-    country: Joi.required(),
+    country: Joi.string().required(),
 
     experience: Joi
         .number()
@@ -41,7 +41,7 @@ export const Validator = Joi.object({
             'number.max': 'Максимальний досвід: 70 років'
         }),
 
-     gender: Joi.required(),
+    gender: Joi.string().required(),
 
     about: Joi
         .string()
@@ -54,5 +54,5 @@ export const Validator = Joi.object({
             'string.max': 'Максимально можна ввести до 250 символів',
         }),
 
-    currentDate: Joi.required()
+    currentDate: Joi.string().required()
 });

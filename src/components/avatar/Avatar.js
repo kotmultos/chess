@@ -8,18 +8,14 @@ const Avatar = () => {
     const APIlink = "https://random.dog/woof.json?ref=apilist.fun";
 
     function getAvatarLink() {
-
         fetch(APIlink)
             .then(response => response.json())
             .then((json) => {
                 console.log(json.url)
-                if(json.url.endsWith('.jpg' || '.png' || '.JPG' || '.jpeg') )
+                if(json.url.endsWith('.jpg' || '.png' || '.JPG' || '.jpeg'))
                     setImageURL(json.url);
                 else getAvatarLink();
             });
-        // console.log(newURL)
-        // setImageURL(newURL)
-
     }
 
     return (
@@ -29,9 +25,6 @@ const Avatar = () => {
             <Button onClick={getAvatarLink} className={'mx-3'}>Change avatar</Button>
 
             <Dropdown.Divider/>
-
-
-
         </div>
     );
 };

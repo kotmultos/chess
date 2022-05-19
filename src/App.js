@@ -29,6 +29,4 @@ function App() {
     );
 }
 
-// change avatar
-
 export default App;

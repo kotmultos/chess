@@ -4,7 +4,7 @@ import {Alert, Button, Dropdown, Form, Nav} from "react-bootstrap";
 import {joiResolver} from '@hookform/resolvers/joi';
 import {Validator} from "../../validator/Validator.js";
 import {useForm} from 'react-hook-form';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const FormComponent = () => {
     const [success, setSuccess] = useState(false);
@@ -18,7 +18,7 @@ const FormComponent = () => {
         setSuccess(true);
         setTimeout(() => {
             setSuccess(false);
-        },5000);
+        },10000);
 
         let request = "";
         request += `email=${e.email}\n`;
@@ -28,6 +28,7 @@ const FormComponent = () => {
         request += `gender=${e.gender}\n`;
         request += `about=${e.about}\n`;
         request += `current-date=${e.currentDate}`;
+        console.log(request)
 
         alert(request);
     }
@@ -36,7 +37,7 @@ const FormComponent = () => {
         register,
         handleSubmit,
         formState: {errors}
-    } = useForm({resolver: joiResolver(Validator), mode: 'onTouched'});
+    } = useForm({resolver: joiResolver(Validator), mode: 'onChange'});
 
     return (
         <Form className={'mt-3 '} onSubmit={handleSubmit(submitForm)}>
@@ -91,10 +92,10 @@ const FormComponent = () => {
                 {errors.experience && <Alert className={'mt-2'}>{errors.experience.message}</Alert>}
             </Form.Group>
 
-            <Form.Group className="mb-3"  {...register('gender')}>
-                <Form.Check required inline type={'radio'} id={'gender-male'} name={'gender'} value={'male'} label={'male'}/>
-                <Form.Check required inline type={'radio'} id={'gender-female'} name={'gender'} value={'female'} label={'female'}/>
-                <Form.Check required inline type={'radio'} id={'gender-not-stated'} name={'gender'} value={'not-stated'} label={'not stated'} defaultChecked/>
+            <Form.Group className="mb-3"  >
+                <Form.Check required inline type={'radio'} id={'gender-male'} name={'gender'} value={'male'} label={'male'} {...register('gender')}/>
+                <Form.Check required inline type={'radio'} id={'gender-female'} name={'gender'} value={'female'} label={'female'}{...register('gender')}/>
+                <Form.Check required inline type={'radio'} id={'gender-not-stated'} name={'gender'} value={'not-stated'} label={'not stated'} defaultChecked {...register('gender')}/>
             </Form.Group>
 
             <Form.Group className="mb-3" >
