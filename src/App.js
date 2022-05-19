@@ -28,10 +28,7 @@ function App() {
         </Container>
     );
 }
-// прихований елемент на форму додати
 
-// валідація Joi/react
-
-// change avatar + Яну запитати.
+// change avatar
 
 export default App;
