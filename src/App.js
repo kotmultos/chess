@@ -8,6 +8,7 @@ import {FormComponent} from "./components/form/FormComponent";
 import {ChessChart} from "./components/chesschart/ChessChart";
 import {Timer} from "./components/timer/Timer";
 import {Avatar} from "./components/avatar/Avatar";
+import UsersInfo from "./components/UsersInfo/UsersInfo";
 
 function App() {
     return (
@@ -23,6 +24,11 @@ function App() {
                     <Col className={'col-xxl-3 col-xl-4 col-lg-12 col-md-5 col-sm-12 col-12'}>
                         <Avatar/>
                         <FormComponent/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <UsersInfo/>
                     </Col>
                 </Row>
         </Container>
