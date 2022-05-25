@@ -28,7 +28,7 @@ const FormComponent = () => {
         request += `gender=${e.gender}\n`;
         request += `about=${e.about}\n`;
         request += `current-date=${e.currentDate}`;
-        console.log(request)
+ц        // console.log(request)
 
         alert(request);
     }
@@ -40,7 +40,7 @@ const FormComponent = () => {
     } = useForm({resolver: joiResolver(Validator), mode: 'onChange'});
 
     return (
-        <Form className={'mt-3 '} onSubmit={handleSubmit(submitForm)}>
+        <Form className={'mt-3'} onSubmit={handleSubmit(submitForm)}>
             <Form.Group className="mb-3" >
                 <Form.Control
                     type="email"
