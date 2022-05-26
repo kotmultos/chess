@@ -4,7 +4,8 @@ import {Alert, Button, Dropdown, Form, Nav} from "react-bootstrap";
 import {joiResolver} from '@hookform/resolvers/joi';
 import {Validator} from "../../validator/Validator.js";
 import {useForm} from 'react-hook-form';
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
 
 const FormComponent = ({URL, setItemAddedfunc}) => {
     const [success, setSuccess] = useState(false);
@@ -25,46 +26,47 @@ const FormComponent = ({URL, setItemAddedfunc}) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(e)
         };
-        // console.log(JSON.stringify(e))
-        // fetch(serverLink, requestOptions)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
-        //
-        //         if(data.status === 200){
-        //             setSuccess(true);
-        //             setTimeout(() => {
-        //                 setSuccess(false);
-        //             },5000);
-        //         }
-        //     });
-
 
         fetch(serverLink, requestOptions)
             .then(response => {
+                // let responseMessage = response.statusMessage;
                 if (response.status === 200)
                 {
                     let data = response.json()
                     console.log(data)
                     setSuccess(true);
                     setTimeout(() => {
-                        setMessageAfterAdding({show: false, message: "Реєстрація успішна", variant: "success"});
+                        setMessageAfterAdding({show: false, message: "", variant: "success"});
                         setSuccess(false);
                     },5000);
                     setItemAddedfunc(true);
-                    setMessageAfterAdding({show: true, message: "Реєстрація успішна", variant: "success"})
+                    // setMessageAfterAdding({show: true, message: `Реєстрація успішна: ${responseMessage}`, variant: "success"})
+                    setMessageAfterAdding({show: true, message: `Реєстрація успішна`, variant: "success"})
                 }
                 else {
-                    setMessageAfterAdding({show: true, message: "Помилка при реєстрації", variant: "danger"})
+                    // setMessageAfterAdding({show: true, message: `Помилка при реєстрації: ${responseMessage}`, variant: "danger"})
+                    setMessageAfterAdding({show: true, message: `Помилка при реєстрації`, variant: "danger"})
                 }
             });
+    }
+
+    const defVal = {
+        email: "",
+        password: "",
+        experience:"",
+        about: "",
     }
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: {errors}
-    } = useForm({resolver: joiResolver(Validator), mode: 'onChange'});
+    } = useForm({resolver: joiResolver(Validator), mode: 'onChange', defaultValues: defVal});
+
+    useEffect(() =>{
+        if(success)  reset(defVal);
+    }, [success, reset])
 
     return (
         <Form className={'mt-3'} onSubmit={handleSubmit(submitForm)}>
@@ -136,9 +138,10 @@ const FormComponent = ({URL, setItemAddedfunc}) => {
                 {errors.about && <Alert className={'mt-2'}>{errors.about.message}</Alert>}
             </Form.Group>
 
-            <div className={"d-flex "}>
+            <div className={""}>
                 <Button variant="primary" type="submit" className={"height-38"}>Submit</Button>
-                {(success || messageAfterAdding.show) && <Alert variant={messageAfterAdding.variant} className={'mx-2'}>{messageAfterAdding.message}</Alert>}
+                {(success || messageAfterAdding.show) &&
+                    <Alert variant={messageAfterAdding.variant} className={'mt-2'}>{messageAfterAdding.message}</Alert>}
             </div>
 
             <Dropdown.Divider/>

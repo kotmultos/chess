@@ -46,8 +46,8 @@ export const Validator = Joi.object({
     about: Joi
         .string()
         .min(0)
-        .max(150)
+        .max(50)
         .messages({
-            'string.max': 'Максимально можна ввести до 150 символів'
+            'string.max': 'Максимально можна ввести до 50 символів'
         })
 });
