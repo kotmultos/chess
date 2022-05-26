@@ -1,90 +1,35 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Table} from "react-bootstrap";
 import OneUser from "./OneUser";
-import {log10} from "chart.js/helpers";
 
 const UsersInfo = () => {
-
-
-    // const users =
-    //     [
-    //         {
-    //             url: "https://vns.lpnu.ua/theme/image.php/boost/core/1652291607/u/f1",
-    //             email: "example.com",
-    //             country: "Ukraine",
-    //             experience: 10,
-    //             about: "just a sample text here"
-    //         },
-    //         {
-    //             url: "https://vns.lpnu.ua/theme/image.php/boost/core/1652291607/u/f1",
-    //             email: "example.com",
-    //             country: "Ukraine",
-    //             experience: 10,
-    //             about: "just a sample text here"
-    //         },
-    //         {
-    //             url: "https://vns.lpnu.ua/theme/image.php/boost/core/1652291607/u/f1",
-    //             email: "example.com",
-    //             country: "Ukraine",
-    //             experience: 10,
-    //             about: "just a sample text here"
-    //         },
-    //         {
-    //             url: "https://vns.lpnu.ua/theme/image.php/boost/core/1652291607/u/f1",
-    //             email: "example.com",
-    //             country: "Ukraine",
-    //             experience: 10,
-    //             about: "just a sample text here"
-    //         },
-    //         {
-    //             url: "https://vns.lpnu.ua/theme/image.php/boost/core/1652291607/u/f1",
-    //             email: "example.com",
-    //             country: "Ukraine",
-    //             experience: 10,
-    //             about: "just a sample text here"
-    //         },
-    //         {
-    //             url: "https://vns.lpnu.ua/theme/image.php/boost/core/1652291607/u/f1",
-    //             email: "example.com",
-    //             country: "Ukraine",
-    //             experience: 10,
-    //             about: "just a sample text here"
-    //         }
-    //     ]
-
     const serverLink = "http://localhost:5000/users"
-    let users = []
 
+    const [users, setUsers] = useState([])
     useEffect(() => {
-        console.log("use effect start")
+        fetch(serverLink)
+            .then(response => response.json())
+            .then((json) => {
+                console.log(json)
+                setUsers(json)
+            });
 
-
-        // fetch(serverLink)
-        //     .then(response => response.json())
-        //     .then((json) => {
-        //         console.log(json)
-        //         users = json
-        //     });
-
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch(serverLink);
-                // console.log(await response.json())
-                console.log("status " + response.status);
-                if (response.status === 200) {
-                    const result = await response.json();
-                    users = result
-                    console.log(result);
-
-                }
-            }
-            catch (e) {
-                console.log("here")
-                console.log(e);
-            }
-        }
-        fetchUsers();
-
+        // const fetchUsers = async () => {
+        //     try {
+        //         const response = await fetch(serverLink);
+        //         // console.log(await response.json())
+        //         console.log("status " + response.status);
+        //         if (response.status === 200) {
+        //             const result = await response.json();
+        //             setUsers(result);
+        //         }
+        //     }
+        //     catch (e) {
+        //         console.log("here----------")
+        //         console.log(e);
+        //     }
+        // }
+        // fetchUsers();
 
     }, [])
 

@@ -4,7 +4,6 @@ import {Image} from "react-bootstrap";
 import './OneUser.css'
 
 const OneUser = ({user}) => {
-    console.log("---------")
     console.log(user)
     return (
         <tr>
