@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Table} from "react-bootstrap";
 import OneUser from "./OneUser";
 
-const UsersInfo = () => {
+const UsersInfo = ({isItemAdded, setItemAdded}) => {
     const serverLink = "http://localhost:5000/users"
 
     const [users, setUsers] = useState([])
@@ -10,10 +10,10 @@ const UsersInfo = () => {
         fetch(serverLink)
             .then(response => response.json())
             .then((json) => {
-                console.log(json)
+                // console.log(json)
                 setUsers(json)
             });
-
+        setItemAdded(false);
         // const fetchUsers = async () => {
         //     try {
         //         const response = await fetch(serverLink);
@@ -31,13 +31,13 @@ const UsersInfo = () => {
         // }
         // fetchUsers();
 
-    }, [])
+    }, [isItemAdded])
 
     return (
         <Table bordered striped hover responsive className={'mt-3 align-middle text-center'} size={"sm"}>
             <thead>
                 <tr>
-                    <th colSpan={6} >Registered users</th>
+                    <th colSpan={7} >Registered users</th>
                 </tr>
                 <tr >
                     <th className={"image"}>image</th>
@@ -45,6 +45,7 @@ const UsersInfo = () => {
                     <th>country</th>
                     <th>experience</th>
                     <th>gender</th>
+                    <th>about</th>
                 </tr>
             </thead>
             <tbody>

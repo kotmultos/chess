@@ -9,8 +9,12 @@ import {ChessChart} from "./components/chesschart/ChessChart";
 import {Timer} from "./components/timer/Timer";
 import {Avatar} from "./components/avatar/Avatar";
 import UsersInfo from "./components/UsersInfo/UsersInfo";
+import AddUser from "./components/AddUser/AddUser";
+import {useState} from "react";
 
 function App() {
+    const [itemAdded, setItemAdded] = useState(false);
+
     return (
         <Container className={"bg-light"}>
                 <Row>
@@ -22,13 +26,12 @@ function App() {
                         <ChessChart/>
                     </Col>
                     <Col className={'col-xxl-3 col-xl-4 col-lg-12 col-md-5 col-sm-12 col-12'}>
-                        <Avatar/>
-                        <FormComponent/>
+                        <AddUser setItemAddedfunc={setItemAdded}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <UsersInfo/>
+                        <UsersInfo isItemAdded={itemAdded} setItemAdded={setItemAdded}/>
                     </Col>
                 </Row>
         </Container>

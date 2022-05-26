@@ -45,14 +45,9 @@ export const Validator = Joi.object({
 
     about: Joi
         .string()
-        .min(10)
-        .max(300)
-        .required()
+        .min(0)
+        .max(150)
         .messages({
-            'string.empty': 'Обов\'язкове поле',
-            'string.min': 'Введіть щонайменше 10 символів',
-            'string.max': 'Максимально можна ввести до 250 символів',
-        }),
-
-    currentDate: Joi.string().required()
+            'string.max': 'Максимально можна ввести до 150 символів'
+        })
 });

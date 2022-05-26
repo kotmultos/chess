@@ -6,31 +6,58 @@ import {Validator} from "../../validator/Validator.js";
 import {useForm} from 'react-hook-form';
 import {useState} from "react";
 
-const FormComponent = () => {
+const FormComponent = ({URL, setItemAddedfunc}) => {
     const [success, setSuccess] = useState(false);
-
-    function getCurrentDate() {
-        let today = new Date();
-        return `${today.getFullYear()}.${(today.getMonth()+1)}.${today.getDate()}`;
-    }
+    const serverLink = "http://localhost:5000/users";
+    const [messageAfterAdding, setMessageAfterAdding] = useState({
+        show: false,
+        message: "Реєстрація успішна",
+        variant: "success"
+    })
 
     function submitForm(e) {
-        setSuccess(true);
-        setTimeout(() => {
-            setSuccess(false);
-        },10000);
+        e.url = URL;
 
-        let request = "";
-        request += `email=${e.email}\n`;
-        request += `password=${e.password}\n`;
-        request += `country=${e.country}\n`;
-        request += `experience=${e.experience}\n`;
-        request += `gender=${e.gender}\n`;
-        request += `about=${e.about}\n`;
-        request += `current-date=${e.currentDate}`;
-ц        // console.log(request)
+        console.log(e)
 
-        alert(request);
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(e)
+        };
+        // console.log(JSON.stringify(e))
+        // fetch(serverLink, requestOptions)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //
+        //         if(data.status === 200){
+        //             setSuccess(true);
+        //             setTimeout(() => {
+        //                 setSuccess(false);
+        //             },5000);
+        //         }
+        //     });
+
+
+        fetch(serverLink, requestOptions)
+            .then(response => {
+                if (response.status === 200)
+                {
+                    let data = response.json()
+                    console.log(data)
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setMessageAfterAdding({show: false, message: "Реєстрація успішна", variant: "success"});
+                        setSuccess(false);
+                    },5000);
+                    setItemAddedfunc(true);
+                    setMessageAfterAdding({show: true, message: "Реєстрація успішна", variant: "success"})
+                }
+                else {
+                    setMessageAfterAdding({show: true, message: "Помилка при реєстрації", variant: "danger"})
+                }
+            });
     }
 
     const {
@@ -109,17 +136,9 @@ const FormComponent = () => {
                 {errors.about && <Alert className={'mt-2'}>{errors.about.message}</Alert>}
             </Form.Group>
 
-            <Form.Group>
-                <Form.Control
-                    id={'currentDate'}
-                    name={'currentDate'}
-                    type={"hidden"}
-                    value={getCurrentDate()}
-                    {...register('currentDate')}/>
-            </Form.Group>
             <div className={"d-flex "}>
                 <Button variant="primary" type="submit" className={"height-38"}>Submit</Button>
-                {success && <Alert variant={"success"} className={'mx-2'}>Everything is good!</Alert>}
+                {(success || messageAfterAdding.show) && <Alert variant={messageAfterAdding.variant} className={'mx-2'}>{messageAfterAdding.message}</Alert>}
             </div>
 
             <Dropdown.Divider/>
