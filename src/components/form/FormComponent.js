@@ -1,10 +1,11 @@
-import './FormComponent.css';
-
 import {Alert, Button, Dropdown, Form, Nav} from "react-bootstrap";
-import {joiResolver} from '@hookform/resolvers/joi';
-import {Validator} from "../../validator/Validator.js";
 import {useForm} from 'react-hook-form';
 import {useEffect, useState} from "react";
+import {joiResolver} from '@hookform/resolvers/joi';
+
+import {Validator} from "../../validator/Validator.js";
+import './FormComponent.css';
+
 
 
 const FormComponent = ({URL, setItemAddedfunc}) => {
@@ -29,7 +30,6 @@ const FormComponent = ({URL, setItemAddedfunc}) => {
 
         fetch(serverLink, requestOptions)
             .then(response => {
-                // let responseMessage = response.statusMessage;
                 if (response.status === 200)
                 {
                     let data = response.json()
@@ -40,11 +40,9 @@ const FormComponent = ({URL, setItemAddedfunc}) => {
                         setSuccess(false);
                     },5000);
                     setItemAddedfunc(true);
-                    // setMessageAfterAdding({show: true, message: `Реєстрація успішна: ${responseMessage}`, variant: "success"})
                     setMessageAfterAdding({show: true, message: `Реєстрація успішна`, variant: "success"})
                 }
                 else {
-                    // setMessageAfterAdding({show: true, message: `Помилка при реєстрації: ${responseMessage}`, variant: "danger"})
                     setMessageAfterAdding({show: true, message: `Помилка при реєстрації`, variant: "danger"})
                 }
             });

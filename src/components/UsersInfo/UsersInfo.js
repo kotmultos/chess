@@ -10,27 +10,9 @@ const UsersInfo = ({isItemAdded, setItemAdded}) => {
         fetch(serverLink)
             .then(response => response.json())
             .then((json) => {
-                // console.log(json)
                 setUsers(json)
             });
         setItemAdded(false);
-        // const fetchUsers = async () => {
-        //     try {
-        //         const response = await fetch(serverLink);
-        //         // console.log(await response.json())
-        //         console.log("status " + response.status);
-        //         if (response.status === 200) {
-        //             const result = await response.json();
-        //             setUsers(result);
-        //         }
-        //     }
-        //     catch (e) {
-        //         console.log("here----------")
-        //         console.log(e);
-        //     }
-        // }
-        // fetchUsers();
-
     }, [isItemAdded])
 
     return (
